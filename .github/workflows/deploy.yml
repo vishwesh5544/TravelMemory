@@ -29,4 +29,4 @@ jobs:
 
     - name: Build and push Docker image
       run: |
-        docker buildx build --push --tag ${{ secrets.DOCKER_USERNAME }}/travel-memory-devops7:latest ./backend
+        docker buildx build --platform linux/amd64,linux/arm64/v8 --push --tag ${{ secrets.DOCKER_USERNAME }}/travel-memory-devops7:latest ./backend
