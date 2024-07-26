@@ -22,6 +22,11 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_TOKEN }}
 
+    - name: Create .env file
+      run: |
+        echo "MONGO_URI=${{ secrets.MONGO_URI }}" > backend/.env
+        echo "PORT=${{ secrets.PORT }}" >> backend/.env
+
     - name: Build and push Docker image
       run: |
         docker buildx build --push --tag ${{ secrets.DOCKER_USERNAME }}/travel-memory-devops7:latest ./backend
