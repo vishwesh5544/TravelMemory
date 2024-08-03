@@ -16,12 +16,14 @@ COPY . .
 # Build the React application
 RUN npm run build
 
-# Serve the built application using a lightweight web server
-FROM nginx:alpine
-COPY --from=0 /app/build /usr/share/nginx/html
+# Install `serve` to serve the built application
+RUN npm install -g serve
 
-# Expose port 80 to the outside world
-EXPOSE 80
+# Set the environment variable to indicate production
+ENV NODE_ENV=production
 
-# Start Nginx when the container launches
-CMD ["nginx", "-g", "daemon off;"]
+# Expose port 3000 to the outside world
+EXPOSE 3000
+
+# Start the application
+CMD ["serve", "-s", "build", "-l", "3000"]
