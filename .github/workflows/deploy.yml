@@ -34,4 +34,5 @@ jobs:
     - name: Get EC2 IP Address
       id: get_ec2_ip
       run: |
-        echo "::set-output name=ec2_ip::${cat .ec2_ip}""
+        echo "EC2_IP=$(cat .ec2_ip)" >> $GITHUB_ENV
+        echo "EOF: Get EC2 IP Address step completed ::: $(cat .ec2_ip)"
