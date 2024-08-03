@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build_and_publish:
+  build_and_publish_backend:
     runs-on: ubuntu-latest
 
     steps:
@@ -27,12 +27,27 @@ jobs:
         echo "MONGO_URI=${{ secrets.MONGO_URI }}" > backend/.env
         echo "PORT=${{ secrets.PORT }}" >> backend/.env
 
-    # - name: Build and push Docker image
-    #   run: |
-    #     docker buildx build --platform linux/amd64,linux/arm64/v8 --push --tag ${{ secrets.DOCKER_USERNAME }}/travel-memory-devops7:latest ./backend
-    
-    - name: Get EC2 IP Address
-      id: get_ec2_ip
+    - name: Build and push Docker image
       run: |
-        echo "EC2_IP=$(cat .ec2_ip)" >> $GITHUB_ENV
-        echo "EOF: Get EC2 IP Address step completed ::: $(cat .ec2_ip)"
+        docker buildx build --platform linux/amd64,linux/arm64/v8 --push --tag ${{ secrets.DOCKER_USERNAME }}/travel-memory-devops7:latest ./backend
+
+  build_and_publish_frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_TOKEN }}
+
+    - name: Build and push Docker image
+      run: |
+        docker buildx build --platform linux/amd64,linux/arm64/v8 --push --tag ${{ secrets.DOCKER_USERNAME }}/travel-memory-devops7-frontend:latest ./frontend
+    
