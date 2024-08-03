@@ -30,3 +30,8 @@ jobs:
     - name: Build and push Docker image
       run: |
         docker buildx build --platform linux/amd64,linux/arm64/v8 --push --tag ${{ secrets.DOCKER_USERNAME }}/travel-memory-devops7:latest ./backend
+    
+    - name: Get EC2 IP Address
+      id: get_ec2_ip
+      run: |
+        echo "::set-output name=ec2_ip::${cat .ec2_ip}""
