@@ -10,7 +10,7 @@ import ExperienceDetails from './components/pages/ExperienceDetails';
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: '/frontend',
     element: <Home></Home>
   },
   {
