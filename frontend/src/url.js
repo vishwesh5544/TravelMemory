@@ -1,1 +1,1 @@
-export const baseUrl = "http://35.80.21.8/backend/"
+export const baseUrl = "http://app.vishcodes.live/backend"
